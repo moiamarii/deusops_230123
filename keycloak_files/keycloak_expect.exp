@@ -1,0 +1,24 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+spawn /vagrant/keycloak_files/keycloak_expect.sh
+match_max 100000
+expect -exact "Press ctrl-d (Unix) or ctrl-z (Windows) to exit\r
+Password: "
+send -- "12345\r"
+expect -exact "\r
+Added 'admin' to '/opt/keycloak/standalone/configuration/keycloak-add-user.json', restart server to load user\r
+Logging into http://localhost:8080/auth as user admin of realm master\r
+Enter password: "
+send -- "1"
+expect -exact "*"
+send -- "2"
+expect -exact "*"
+send -- "3"
+expect -exact "*"
+send -- "4"
+expect -exact "*"
+send -- "5"
+expect -exact "*"
+send -- "\r"
+expect eof

@@ -1,0 +1,43 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+spawn /vagrant/db_files/db.sh
+match_max 100000
+expect -exact "Enter password for new role: "
+send -- "12345\r"
+expect -exact "\r
+Enter it again: "
+send -- "12345\r"
+expect -exact "\r
+Adding user `keycloak' ...\r
+Adding new group `keycloak' (1002) ...\r
+Adding new user `keycloak' (1002) with group `keycloak' ...\r
+Creating home directory `/home/keycloak' ...\r
+Copying files from `/etc/skel' ...\r
+New password: "
+send -- "12345\r"
+expect -exact "\r
+Retype new password: "
+send -- "12345\r"
+expect -exact "\r
+passwd: password updated successfully\r
+Changing the user information for keycloak\r
+Enter the new value, or press ENTER for the default\r
+	Full Name \[\]: "
+send -- "\r"
+expect -exact "\r
+	Room Number \[\]: "
+send -- "\r"
+expect -exact "\r
+	Work Phone \[\]: "
+send -- "\r"
+expect -exact "\r
+	Home Phone \[\]: "
+send -- "\r"
+expect -exact "\r
+	Other \[\]: "
+send -- "\r"
+expect -exact "\r
+Is the information correct? \[Y/n\] "
+send -- "y\r"
+expect eof
